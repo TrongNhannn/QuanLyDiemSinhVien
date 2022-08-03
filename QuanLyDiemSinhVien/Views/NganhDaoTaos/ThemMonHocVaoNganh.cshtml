@@ -1,0 +1,323 @@
+﻿@model QuanLyDiemSinhVien.Models.NganhDaoTao
+@using QuanLyDiemSinhVien.Models;
+@{
+    ViewBag.Title = "Thêm môn học vào ngành";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<MonHoc> dataMonHoc = (List<MonHoc>)ViewData["dataMonHoc"];
+}
+
+@Scripts.Render("~/bundles/jquery")
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Thêm môn học vào ngành
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="/NganhDaoTaos">Quản lý lớp tín chỉ</a></li>
+        <li class="active">Thêm môn học vào ngành</li>
+    </ol>
+</section>
+<hr />
+<section class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Thông tin ngành đào tạo</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-horizontal">
+                                @Html.HiddenFor(model => model.NganhDaoTaoID, new { id = "hNganhDaoTaoID" })
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Khoa.TenKhoa, "Khoa", htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-8">
+                                        @Html.DropDownList("KhoaID", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.TenNganh, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-8">
+                                        @Html.DropDownList("NganhDaoTaoID", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Danh sách môn học</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="gridMonHocDetails" class="table table-bordered table-striped hover">
+                        <thead>
+                            <tr>
+                                <th><input name="select_all" value="1" type="checkbox"></th>
+                                <th>
+                                    Mã môn học
+                                </th>
+                                <th>
+                                    Tên môn học
+                                </th>
+                                <th>
+                                    Số tín chỉ
+                                </th>
+                                <th>
+                                    Loại môn học
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ int i = 1;}
+                            @foreach (MonHoc item in dataMonHoc)
+                            {
+                                <tr>
+                                    <td>@i</td>
+                                    <td>
+                                        @item.MaMonHoc
+                                    </td>
+                                    <td>
+                                        @item.TenMonHoc
+                                    </td>
+                                    <td>
+                                        @item.SoTinChi.ToString()
+                                    </td>
+                                    <td>
+                                        @item.LoaiMonHoc.ToString()
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-offset-4 col-lg-7">
+            <button class="btn bg-maroon margin" id="btnUpdate">Cập nhật</button>
+            @Html.ActionLink("Quay lại", "Details", new { id = Model.NganhDaoTaoID }, new { @class = "btn bg-purple margin" })
+        </div>
+    </div>
+</section>
+
+<script>
+    //
+    // Updates "Select all" control in a data table
+    //
+    function updateDataTableSelectAllCtrl(table) {
+        var $table = table.table().node();
+        var $chkbox_all = $('tbody input[type="checkbox"]', $table);
+        var $chkbox_checked = $('tbody input[type="checkbox"]:checked', $table);
+        var chkbox_select_all = $('thead input[name="select_all"]', $table).get(0);
+
+        // If none of the checkboxes are checked
+        if ($chkbox_checked.length === 0) {
+            chkbox_select_all.checked = false;
+            if ('indeterminate' in chkbox_select_all) {
+                chkbox_select_all.indeterminate = false;
+            }
+
+            // If all of the checkboxes are checked
+        } else if ($chkbox_checked.length === $chkbox_all.length) {
+            chkbox_select_all.checked = true;
+            if ('indeterminate' in chkbox_select_all) {
+                chkbox_select_all.indeterminate = false;
+            }
+
+            // If some of the checkboxes are checked
+        } else {
+            chkbox_select_all.checked = true;
+            if ('indeterminate' in chkbox_select_all) {
+                chkbox_select_all.indeterminate = true;
+            }
+        }
+    }
+
+    $(function () {
+        var rows_selected = [];
+
+        var table = $("#gridMonHocDetails").DataTable({
+            'paging': true,
+            'lengthChange': true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false,
+            'language': dataTable.language,
+            'columnDefs': [
+                {
+                    'targets': 0,
+                    'searchable': false,
+                    'orderable': false,
+                    'width': 50,
+                    'className': 'text-center',
+                    'render': function (data, type, full, meta) {
+                        return '<input type="checkbox">';
+                    }
+                }, {
+                    "targets": [1], "width": 120
+                }, {
+                    "targets": [3], "width": 70, "class": "text-center"
+                }, {
+                    "targets": [4], "class": "text-center", "width": 100, "render": function (data, type, row) {
+                        var html = '';
+                        switch (parseInt(data)) {
+                            case 1:
+                                return "Bắt buộc"; break;
+                            case 2:
+                                return "Tự chọn"; break;
+                        }
+                        return html;
+                    }
+                }
+            ],
+            'order': [[1, 'asc']],
+            'rowCallback': function (row, data, dataIndex) {
+                // Get row ID
+                var rowId = data[0];
+
+                // If row ID is in the list of selected row IDs
+                if ($.inArray(rowId, rows_selected) !== -1) {
+                    $(row).find('input[type="checkbox"]').prop('checked', true);
+                    $(row).addClass('selected');
+                }
+            }
+        });
+
+        // Handle click on checkbox
+        $('#gridMonHocDetails tbody').on('click', 'input[type="checkbox"]', function (e) {
+            var $row = $(this).closest('tr');
+
+            // Get row data
+            var data = table.row($row).data();
+
+            // Get row ID
+            var rowId = data[0];
+
+            // Determine whether row ID is in the list of selected row IDs
+            var index = $.inArray(rowId, rows_selected);
+
+            // If checkbox is checked and row ID is not in list of selected row IDs
+            if (this.checked && index === -1) {
+                rows_selected.push(rowId);
+
+                // Otherwise, if checkbox is not checked and row ID is in list of selected row IDs
+            } else if (!this.checked && index !== -1) {
+                rows_selected.splice(index, 1);
+            }
+
+            if (this.checked) {
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Update state of "Select all" control
+            updateDataTableSelectAllCtrl(table);
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        // Handle click on table cells with checkboxes
+        $('#gridSinhVienDetails').on('click', 'tbody td, thead th:first-child', function (e) {
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
+        // Handle click on "Select all" control
+        $('thead input[name="select_all"]', table.table().container()).on('click', function (e) {
+            if (this.checked) {
+                $('#gridMonHocDetails tbody input[type="checkbox"]:not(:checked)').trigger('click');
+            } else {
+                $('#gridMonHocDetails tbody input[type="checkbox"]:checked').trigger('click');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        // Handle table draw event
+        table.on('draw', function () {
+            // Update state of "Select all" control
+            updateDataTableSelectAllCtrl(table);
+        });
+
+        // Handle form submission event
+        $('#btnUpdate').on('click', function (e) {
+            var data = "";
+            // Iterate over all selected checkboxes
+            $.each(rows_selected, function (index, rowId) {
+                // Create a hidden element
+                data += rowId + ","
+            });
+            if (data == "") {
+                alert("Bạn chưa chọn lớp để thêm vào ngành.");
+                return;
+            }
+            var rs = confirm("Xác nhận cập nhật lớp vào ngành đã chọn.");
+            if (rs)
+                loadData({
+                    data: {
+                        monHocID: data
+                        , nganhDaoTaoID: $("#hNganhDaoTaoID").val()
+                    }
+                    , url: "/NganhDaoTaos/ActionThemLopVaoNganh"
+                    , success: function (data, status) {
+                        alert(data.message);
+                        window.location.href = "/NganhDaoTaos/Details/" + $("#hNganhDaoTaoID").val()
+                    }, error: function (err) {
+                        alert(err);
+                    }
+                })
+        });
+
+    });
+
+    function loadData(allData) {
+        var url = allData.url;
+        var method = allData.method;
+        var data = allData.data;
+        $.ajax({
+            type: method || "POST",
+            url: url,
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: allData.success,
+            error: allData.error
+        });
+    }
+</script>

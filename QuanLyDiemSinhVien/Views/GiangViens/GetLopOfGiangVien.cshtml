@@ -1,0 +1,101 @@
+﻿@model IEnumerable<QuanLyDiemSinhVien.ViewModels.LopTinChiMonHocViewModels>
+@using QuanLyDiemSinhVien.ViewModels;
+@{
+    ViewBag.Title = "GetLopOfGiangVien";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/jquery")
+<section class="content-header">
+    <h1>
+        Danh sách lớp giảng dạy
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li class="active">Danh sách lớp</li>
+    </ol>
+</section>
+<hr />
+<section class="content">
+    <table id="gridLopTinChiDetails" class="table table-bordered table-striped hover">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>
+                    Mã lớp
+                </th>
+                <th>
+                    Tên lớp
+                </th>
+                <th>
+                   Môn học
+                </th>
+                <th>
+                   Số TC
+                </th>
+                <th>
+                   Ngày bắt đầu
+                </th>
+                <th>
+                   Ngày kết thúc
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int i = 1; }
+            @foreach (LopTinChiMonHocViewModels item in Model)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@Html.DisplayFor(modelItem => item.MaLopTinChi)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TenLopTinChi)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TenMonHoc)</td>
+                    <td>@Html.DisplayFor(modelItem => item.SoTinChi)</td>
+                    <td>@Html.DisplayFor(modelItem => item.NgayBatDau)</td>
+                    <td>@Html.DisplayFor(modelItem => item.NgayKetThuc)</td>
+                    <td>@item.LopTinChiID</td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+</section>
+
+<script>
+    $(function () {
+        var table = $("#gridLopTinChiDetails").DataTable({
+            'paging': true,
+            'lengthChange': true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false,
+            'language': dataTable.language,
+            'columnDefs': [
+                {
+                    "targets": [0], "width": 40, "class": "text-center", "orderable": false
+                }, {
+                    "targets": [1], "width": 90, "class": "text-left"
+                }, {
+                    "targets": [4], "width": 60, "class": "text-center"
+                }, {
+                    "targets": [5, 6], "width": 90, "class": "text-center"
+                }, {
+                    "targets": [7], "class": "text-center", "orderable": false, "width": 60,
+                    "render": function (data, type, row) {
+                        var html = '';
+                        html += '<a type="button" href="/BangDiems/GiangVienCapNhatDiem/' + data + '" title="Xem chi tiết" class="btn bg-orange btn-xs"><i class="fa fa-fw fa-eye"></i></a>';
+                        return html;
+                    }
+                }
+
+            ]
+        })
+
+
+    })
+</script>
+

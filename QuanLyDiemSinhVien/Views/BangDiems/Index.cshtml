@@ -1,0 +1,358 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý bảng điểm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/jquery")
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Quản lý bảng điểm
+        <small>Danh sách chi tiết</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li class="active">Quản lý bảng điểm</li>
+    </ol>
+</section>
+<hr />
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-default">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Khoa</label>
+                                @Html.DropDownList("KhoaID", null, htmlAttributes: new { @class = "form-control", @onchange = "khoaChange()" })
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Ngành đào tạo</label>
+                                @Html.DropDownList("NganhDaoTaoID", null, htmlAttributes: new { @class = "form-control", @onchange = "nganhDaoTaoChange()" })
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Môn học</label>
+                                @Html.DropDownList("MonHocID", null, htmlAttributes: new { @class = "form-control", @onchange = "monHocChange()" })
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Lớp học</label>
+                                @Html.DropDownList("LopTinChiID", null, htmlAttributes: new { @class = "form-control", @onchange = "lopTinChiChange()" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+
+    <table id="gridBangDiemSinhVienDetails" class="table table-bordered table-striped hover">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>
+                    Mã SV
+                </th>
+                <th>
+                    Họ và tên
+                </th>
+                <th>
+                    Ngày sinh
+                </th>
+                <th>
+                    Điểm TP
+                </th>
+                <th>
+                    Điểm Thi
+                </th>
+                <th>
+                    Điểm TB
+                </th>
+                <th>
+                    Điểm Chữ
+                </th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</section>
+
+
+<script>
+    $(function () {
+        NganhDaoTaos = $('#NganhDaoTaoID');
+        LopTinChiID = $('#LopTinChiID');
+        MonHocs = $('#MonHocID');
+
+        LopTinChiID.empty();
+        NganhDaoTaos.empty();
+        MonHocs.empty();
+
+        //load du lieu Khoa
+        khoaChange();
+        //Load Table
+        var table = $("#gridBangDiemSinhVienDetails").DataTable({
+            'paging': true,
+            'lengthChange': true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false,
+            'language': dataTable.language,
+            'columns': [
+                { data: "STT" }
+                , { data: "MaSinhVien" }
+                , { data: "HoTen" }
+                , { data: "NgaySinh" }
+                , { data: "DiemThanhPhan", "searchable": false }
+                , { data: "DiemThi", "searchable": false }
+                , { data: "DiemTrungBinh", "searchable": false }
+                , { data: "DiemChu", "searchable": false }
+                , { data: "SinhVienID", }
+            ],
+            'columnDefs': [
+                {
+                    "targets": [0], "width": 40, "class": "text-center", "orderable": false
+                }, {
+                    "targets": [1], "width": 90, "class": "text-left"
+                }, {
+                    "targets": 3, "width": 70, "class": "text-center",
+                    "render": function (data, type, row) {
+                        var x = parseInt(data.substr(6));
+                        var html = convertDate(x);
+                        return html;
+                    }
+                }, {
+                    "targets": [4], "width": 80, "class": "text-center", "orderable": false,
+                    "render": function (data, type, row) {
+                        var html = '';
+                        html += '<input onkeypress="return isNumber(event)" id="index_DTP_' + row.BangDiemID + '" value="' + data + '" class="diem-edit text-center"/>';
+                        return html;
+                    }
+                }, {
+                    "targets": [5], "width": 80, "class": "text-center", "orderable": false,
+                    "render": function (data, type, row) {
+                        var html = '';
+                        html += '<input onkeypress="return isNumber(event)" id="index_DT_' + row.BangDiemID + '" value="' + data + '" class="diem-edit text-center"/>';
+                        return html;
+                    }
+                }, {
+                    "targets": [6], "width": 80, "class": "text-center", "orderable": false,
+                    "render": function (data, type, row) {
+                        var html = '';
+                        html += '<input readonly value="' + data + '" class="diem-edit text-center"/>';
+                        return html;
+                    }
+                }
+                , {
+                    "targets": [7], "width": 80, "class": "text-center", "orderable": false,
+                    "render": function (data, type, row) {
+                        var kq = ""
+                        var diem = parseFloat(String(row.DiemTrungBinh));
+                        if (diem < 4)
+                            kq = "F";
+                        else if (diem >= 4 && diem < 5)
+                            kq = "D";
+                        else if (diem >= 5 && diem < 5.5)
+                            kq = "D+";
+                        else if (diem >= 5.5 && diem < 6.5)
+                            kq = "C";
+                        else if (diem >= 6.5 && diem < 7)
+                            kq = "C+";
+                        else if (diem >= 7 && diem < 8)
+                            kq = "B";
+                        else if (diem >= 8 && diem < 8.5)
+                            kq = "B+";
+                        else
+                            kq = "A";
+                        var html = '';
+                        html += '<input readonly value="' + kq + '" class="diem-edit text-center"/>';
+                        return html;
+                    }
+                }
+                , {
+                    "targets": [8], "class": "text-center", "orderable": false, "width": 60,
+                    "render": function (data, type, row) {
+                        var html = '';
+                        html += '<a type="button" data-content="' + data + '" class="btn bg-olive btn-xs"><i class="fa fa-fw fa-save"></i></a>';
+                        return html;
+                    }
+                }
+            ]
+        })
+
+        $('#gridBangDiemSinhVienDetails tbody').on('click', 'a', function () {
+            var _row = this;
+            var data = table.row($(_row).parents('tr')).data();
+            console.log(data);
+            var rs = confirm("Xác nhận cập nhật điểm sinh viên!");
+            if (rs)
+                loadData({
+                    url: "/BangDiems/CapNhatBangDiemLopHocSinhVien"
+                    , data: {
+                        bangdiemID: data.BangDiemID
+                        , diemTP: parseFloat($("#index_DTP_" + data.BangDiemID).val())
+                        , diemThi: parseFloat($("#index_DT_" + data.BangDiemID).val())
+                    }, success: function (data, status) {
+                        alert(data.message);
+                    }, error: function (error) {
+                        console.log(error);
+                        alert(error);
+                    }
+                });
+        });
+    })
+    function khoaChange() {
+        var SelValue;
+        var dropdown = document.getElementById('KhoaID');
+        if (dropdown != null) {
+            var myindex = dropdown.selectedIndex;
+            if (myindex != -1) {
+                SelValue = dropdown.options[myindex].value;
+            }
+        }
+
+        //LoadNganhDaoTao
+        loadData({
+            url: "/NganhDaoTaos/GetListNganhDaoTaoTheoKhoa"
+            , data: { khoaID: SelValue }
+            , success: function (data, status) {
+                NganhDaoTaos.empty();
+                $.each(data, function (index, object) {
+                    var html = '<option value="' + object.NganhDaoTaoID + '">' + object.TenNganh + '</option>';
+                    NganhDaoTaos.append(html);
+                });
+
+                //load du lieu mon hoc
+                setTimeout(nganhDaoTaoChange(), 1500);
+            }
+        });
+        return false;
+    }
+
+    function nganhDaoTaoChange() {
+        var SelValue;
+        var dropdown = document.getElementById('NganhDaoTaoID');
+        if (dropdown != null) {
+            var myindex = dropdown.selectedIndex;
+            if (myindex != -1) {
+                SelValue = dropdown.options[myindex].value;
+            }
+        }
+        //LoadMonHoc
+        loadData({
+            url: "/MonHocs/GetListMonHocTheoNganh"
+            , data: { nganhDaoTaoID: SelValue }
+            , success: function (data, status) {
+                MonHocs.empty();
+                $.each(data, function (index, object) {
+                    var html = '<option value="' + object.MonHocID + '">' + object.TenMonHoc + '</option>';
+                    MonHocs.append(html);
+                });
+
+                setTimeout(monHocChange(), 1500);
+            }
+        });
+        return false;
+    }
+
+    function monHocChange() {
+        var SelValue;
+        var dropdown = document.getElementById('MonHocID');
+        if (dropdown != null) {
+            var myindex = dropdown.selectedIndex;
+            if (myindex != -1) {
+                SelValue = dropdown.options[myindex].value;
+            }
+        }
+        //LoadLopTinChi
+        loadData({
+            url: "/LopTinChis/GetListLopTinChiTheoMonHoc"
+            , data: { monHocID: SelValue }
+            , success: function (data, status) {
+                LopTinChiID.empty();
+                $.each(data, function (index, object) {
+                    var html = '<option value="' + object.LopTinChiID + '">' + object.TenLopTinChi + '</option>';
+                    LopTinChiID.append(html);
+                });
+                setTimeout(lopTinChiChange(), 1500);
+            }
+        });
+    }
+
+    function lopTinChiChange() {
+        var SelValue;
+        var dropdown = document.getElementById('LopTinChiID');
+        if (dropdown != null) {
+            var myindex = dropdown.selectedIndex;
+            if (myindex != -1) {
+                SelValue = dropdown.options[myindex].value;
+            }
+        }
+
+        //Load Data theo lớp
+        loadData({
+            url: "/BangDiems/LayDanhSachBangDiemTheoLopTinChi"
+            , data: { loptinchiID: SelValue }
+            , success: function (data, status) {
+                var newData = [];
+                for (var i = 0; i < data.length; i++) {
+                    data[i].STT = (i + 1);
+                }
+                $('#gridBangDiemSinhVienDetails').dataTable().fnClearTable();
+                $('#gridBangDiemSinhVienDetails').dataTable().fnAddData(data);
+            }, error: function () {
+                $('#gridBangDiemSinhVienDetails').dataTable().fnClearTable();
+            }
+        });
+    }
+    function loadData(allData) {
+        var url = allData.url;
+        var method = allData.method;
+        var data = allData.data;
+        $.ajax({
+            type: method || "POST",
+            url: url,
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: allData.success,
+            error: allData.error
+        });
+    }
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        console.log(charCode)
+        if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 46) {
+            return false;
+        }
+        return true;
+    }
+    function convertDate(dateObject) {
+        var d = new Date(dateObject);
+        var day = d.getDate();
+        var month = d.getMonth() + 1;
+        var year = d.getFullYear();
+        if (day < 10) {
+            day = "0" + day;
+        }
+        if (month < 10) {
+            month = "0" + month;
+        }
+        var date = day + "-" + month + "-" + year;
+
+        return date;
+    };
+</script>

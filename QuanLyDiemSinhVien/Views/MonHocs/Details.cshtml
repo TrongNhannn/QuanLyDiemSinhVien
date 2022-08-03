@@ -1,0 +1,51 @@
+﻿@model QuanLyDiemSinhVien.Models.MonHoc
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MonHoc</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MaMonHoc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaMonHoc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TenMonHoc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenMonHoc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoTinChi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoTinChi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LoaiMonHoc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoaiMonHoc)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MonHocID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

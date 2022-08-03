@@ -1,0 +1,318 @@
+﻿@model QuanLyDiemSinhVien.Models.LopTinChi
+@using QuanLyDiemSinhVien.ViewModels;
+
+@{
+    ViewBag.Title = "Chi tiết lớp tín chỉ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<DanhSachLopViewModels> dataSinhVien = (List<DanhSachLopViewModels>)ViewData["dataSinhVien"];
+}
+
+
+@Scripts.Render("~/bundles/jquery")
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Quản lý lớp tín chỉ
+        <small>Thông tin chi tiết</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li class="active">Xem chi tiết</li>
+    </ol>
+</section>
+<hr />
+<section class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Thông tin lớp</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-horizontal">
+                                @Html.HiddenFor(model => model.LopTinChiID, new { id = "hLopTinChiID" })
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.NganhDaoTao.KhoaID, "Khoa", htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-8">
+                                        @Html.DropDownList("KhoaID", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.NganhDaoTaoID, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-8">
+                                        @Html.DropDownList("NganhDaoTaoID", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.MaLopTinChi, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-8">
+                                        @Html.DisplayFor(model => model.MaLopTinChi, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.TenLopTinChi, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-8">
+                                        @Html.DisplayFor(model => model.TenLopTinChi, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.SoLuongToiDa, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-8">
+                                        @Html.DisplayFor(model => model.SoLuongToiDa, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.MonHocID, "Môn học", htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-8">
+                                        @Html.DropDownList("MonHocID", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.GiangVienID, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-8">
+                                        @Html.DropDownList("GiangVienID", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.NgayBatDau, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-8">
+                                        @Html.DisplayFor(model => model.NgayBatDau, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.NgayKetThuc, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-8">
+                                        @Html.DisplayFor(model => model.NgayKetThuc, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.KichHoat, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-8">
+                                        @if (Model.KichHoat == true)
+                                        {
+                                            <span class="label label-success">Đang mở</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="label label-danger">Đang đóng</span>
+                                        }
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Danh sách sinh viên</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="gridSinhVienDetails" class="table table-bordered table-striped hover">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>
+                                    Mã SV
+                                </th>
+                                <th>
+                                    Họ và tên
+                                </th>
+                                <th>
+                                    Ngày sinh
+                                </th>
+                                <th>
+                                    Điểm TP
+                                </th>
+                                <th>
+                                    Điểm Thi
+                                </th>
+                                <th>
+                                    Điểm TB
+                                </th>
+                                <th>
+                                    Điểm Chữ
+                                </th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ int i = 1;}
+                            @foreach (DanhSachLopViewModels item in dataSinhVien)
+            {
+                                <tr>
+                                    <td>@i</td>
+                                    <td>
+                                        @item.MaSinhVien.ToString()
+                                    </td>
+                                    <td>
+                                        @item.HoTen.ToString()
+                                    </td>
+                                    <td>
+                                        @item.NgaySinh.Value.ToString("dd-MM-yyyy")
+                                    </td>
+                                    <td>
+                                        @item.DiemThanhPhan.ToString()
+                                    </td>
+                                    <td>
+                                        @item.DiemThi.ToString()
+                                    </td>
+                                    <td>
+                                        @item.DiemTrungBinh.ToString()
+                                    </td>
+                                    <td>
+                                        @item.DiemChu
+                                    </td>
+                                    <td>
+                                        @item.SinhVienID.ToString()
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-offset-4 col-lg-7">
+            @Html.ActionLink("Thêm sinh viên", "ThemSinhVienVaoLop", new { id = Model.LopTinChiID }, new { @class = "btn bg-maroon margin" })
+            @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn bg-purple margin" })
+        </div>
+    </div>
+</section>
+
+<script>
+    $(function () {
+        var table = $("#gridSinhVienDetails").DataTable({
+            'paging': true,
+            'lengthChange': true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false,
+            'language': dataTable.language,
+            'columnDefs': [
+                {
+                    "targets": [0], "width": 40, "class": "text-center", "orderable": false
+                }, {
+                    "targets": [1], "width": 90, "class": "text-center"
+                }, {
+                    "targets": 3, "width": 70, "class": "text-center"
+                }, {
+                    "targets": [4, 5, 6], "width": 80, "class": "text-center", "orderable": false,
+                    "render": function (data, type, row) {
+                        var html = '';
+                        html += '<input readonly value="' + data + '" class="diem-edit text-center"/>';
+                        return html;
+                    }
+                }, {
+                    "targets": [7], "width": 80, "class": "text-center", "orderable": false,
+                    "render": function (data, type, row) {
+                        var kq = ""
+                        var diem = parseFloat(String(row[6]));
+                        if (diem < 4)
+                            kq = "F";
+                        else if (diem >= 4 && diem < 5)
+                            kq = "D";
+                        else if (diem >= 5 && diem < 5.5)
+                            kq = "D+";
+                        else if (diem >= 5.5 && diem < 6.5)
+                            kq = "C";
+                        else if (diem >= 6.5 && diem < 7)
+                            kq = "C+";
+                        else if (diem >= 7 && diem < 8)
+                            kq = "B";
+                        else if (diem >= 8 && diem < 8.5)
+                            kq = "B+";
+                        else
+                            kq = "A";
+                        var html = '';
+                        html += '<input readonly value="' + kq + '" class="diem-edit text-center"/>';
+                        return html;
+                    }
+                }
+                , {
+                    "targets": [8], "class": "text-center", "orderable": false, "width": 60,
+                    "render": function (data, type, row) {
+                        var html = '';
+                        html += '<a type="button" data-content="' + data + '" class="btn bg-maroon btn-xs"><i class="fa fa-fw fa-trash"></i></a>';
+                        return html;
+                    }
+                }
+            ]
+        })
+
+        $('#gridSinhVienDetails tbody').on('click', 'a', function () {
+            var _row = this;
+            var data = table.row($(_row).parents('tr')).data();
+            svID = data[8];
+            var rs = confirm("Xác nhận xóa sinh viên trong lớp!");
+            if (rs)
+                loadData({
+                    url: "/LopTinChis/ActionXoaSinhVienVaoLop"
+                    , data: {
+                        sinhVienID: parseInt(svID)
+                        , lopTinChiID: parseInt($("#hLopTinChiID").val())
+                    }, success: function (data, status) {
+                        console.log(data);
+                        $(_row).closest('tr').remove();
+                    }, error: function (error) {
+                        alert(error);
+                    }
+                });
+        });
+    })
+
+    function loadData(allData) {
+        var url = allData.url;
+        var method = allData.method;
+        var data = allData.data;
+        $.ajax({
+            type: method || "POST",
+            url: url,
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: allData.success,
+            error: allData.error
+        });
+    }
+</script>

@@ -1,0 +1,215 @@
+﻿@model QuanLyDiemSinhVien.Models.NganhDaoTao
+@using QuanLyDiemSinhVien.ViewModels;
+@{
+    ViewBag.Title = "Chi tiết ngành đào tạo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<NganhDaoTaoMonHocViewModels> dataMonHoc = (List<NganhDaoTaoMonHocViewModels>) ViewData["DanhSachMonHoc"];
+}
+
+@Scripts.Render("~/bundles/jquery")
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Quản lý ngành đào tạo
+        <small>Thông tin chi tiết</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li class="active">Xem chi tiết</li>
+    </ol>
+</section>
+<hr />
+<section class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Thông tin ngành đào tạo</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-horizontal">
+                                @Html.HiddenFor(model => model.NganhDaoTaoID, new { id = "hNganhDaoTaoID" })
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Khoa.TenKhoa, "Khoa", htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-8">
+                                        @Html.DropDownList("KhoaID", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.TenNganh, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-8">
+                                        @Html.DropDownList("NganhDaoTaoID", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Danh sách môn học trong ngành</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="gridMonHocDetails" class="table table-bordered table-striped hover">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>
+                                    Mã môn học
+                                </th>
+                                <th>
+                                    Tên môn học
+                                </th>
+                                <th>
+                                    Số tín chỉ
+                                </th>
+                                <th>
+                                    Loại môn học
+                                </th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ int i = 1; }
+                            @foreach (NganhDaoTaoMonHocViewModels item in dataMonHoc)
+                                {
+                                            <tr>
+                                                <td>@i</td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MonHoc.MaMonHoc)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MonHoc.TenMonHoc)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MonHoc.SoTinChi)
+                                                </td>
+                                                <td>
+                                                    @item.MonHoc.LoaiMonHoc
+                                                </td>
+                                                <td>@item.MonHoc.MonHocID</td>
+                                            </tr>
+                        i++;
+                        }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-offset-4 col-lg-7">
+            @Html.ActionLink("Thêm môn học", "ThemMonHocVaoNganh", new { id = Model.NganhDaoTaoID }, new { @class = "btn bg-maroon margin" })
+            @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn bg-purple margin" })
+        </div>
+    </div>
+</section>
+
+<script>
+    $(function () {
+        var table = $("#gridMonHocDetails").DataTable({
+            'paging': true,
+            'lengthChange': true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false,
+            'language': dataTable.language,
+            'columnDefs': [
+                {
+                    "targets": [0], "width": 40, "class": "text-center", "orderable": false
+                }, {
+                    "targets": [1], "width": 150, "class": "text-left"
+                }, {
+                    "targets": [3], "width": 100, "class": "text-center"
+                }, {
+                    "targets": [4], "class": "text-center", "orderable": false, "width": 120,
+                    "render": function (data, type, row) {
+                        var html = '';
+                        switch (parseInt(data)) {
+                            case 1:
+                                return "Bắt buộc"; break;
+                            case 2:
+                                return "Tự chọn"; break;
+                        }
+                        return html;
+                    }
+                }
+                , {
+                    "targets": [5], "class": "text-center", "orderable": false, "width": 100,
+                    "render": function (data, type, row) {
+                        var html = '';
+                        html += '<a type="button" data-content="' + data + '" class="btn bg-maroon btn-xs"><i class="fa fa-fw fa-trash"></i></a>';
+                        return html;
+                    }
+                }
+            ]
+        });
+
+        $('#gridMonHocDetails tbody').on('click', 'a', function () {
+            var _row = this;
+            var data = table.row($(_row).parents('tr')).data();
+            svID = data[5];
+            var rs = confirm("Xác nhận xóa sinh viên trong lớp!");
+            if (rs)
+                loadData({
+                    url: "/NganhDaoTaos/ActionXoaMonHocTrongNganh"
+                    , data: {
+                        monHocID: parseInt(svID)
+                        , nganhDaoTaoID: parseInt($("#hNganhDaoTaoID").val())
+                    }, success: function (data, status) {
+                        console.log(data);
+                        $(_row).closest('tr').remove();
+                    }, error: function (error) {
+                        alert(error);
+                    }
+                });
+        });
+    })
+
+    function loadData(allData) {
+        var url = allData.url;
+        var method = allData.method;
+        var data = allData.data;
+        $.ajax({
+            type: method || "POST",
+            url: url,
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: allData.success,
+            error: allData.error
+        });
+    }
+</script>

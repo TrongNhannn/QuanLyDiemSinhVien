@@ -1,0 +1,91 @@
+﻿@model IEnumerable<QuanLyDiemSinhVien.Models.GiangVien>
+
+@{
+    ViewBag.Title = "Giảng viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Scripts.Render("~/bundles/jquery")
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Quản lý giảng viên
+        <small>Danh sách chi tiết</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li class="active">Quản lý giảng viên</li>
+    </ol>
+</section>
+<hr />
+                      <a href="/GiangViens/Create" class="btn btn-primary margin"><i class="fa fa-fw fa-plus"></i> Thêm mới</a>
+
+<section class="content">
+    <table id="gridDetails" class="table table-bordered table-striped hover">
+        <thead style="background-color:chocolate;">
+            <tr>
+                <th>STT</th>
+                <th>Mã giảng viên</th>
+                <th>Họ và tên</th>
+                <th>Ngày sinh</th>
+                <th>Số điện thoại</th>
+                <th>Email</th>
+                <th>Ngày tạo</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 1;}
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@item.MaGiangVien</td>
+                    <td>@item.HoTen</td>
+                    <td>@Html.DisplayFor(modelItem => item.NgaySinh)</td>
+                    <td>@item.SoDienThoai</td>
+                    <td>@item.Email</td>
+                    <td>@Html.DisplayFor(modelItem => item.NgayTao)</td>
+                    <td>@item.GiangVienID</td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+</section>
+
+<script>
+    $(function () {
+        $("#gridDetails").DataTable({
+            'paging': true,
+            'lengthChange': true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false,
+            'language': dataTable.language,
+            'columnDefs': [
+                {
+                    "targets": 0, "width": "30px","class": "text-center", "orderable": false
+                }, {
+                    "targets": 3, "width": 70, "class": "text-center"
+                }, {
+                    "targets": 6, "width": 70, "class": "text-center"
+                }, {
+                    "targets": 7, "class": "text-center", "orderable": false,
+                    "render": function (data, type, row) {
+                        var html = '';
+                        html += '<a type="button" href="/GiangViens/Edit/' + data + '" class="btn bg-olive btn-xs"><i class="fa fa-fw fa-pencil"></i></a>';
+                        html += '<a type="button" href="/GiangViens/Delete/' + data + '" class="btn bg-maroon btn-xs"><i class="fa fa-fw fa-trash"></i></a>';
+                        return html;
+                    }
+                }
+            ]
+        })
+        $("div.toolbar").html('<b>Custom tool bar! Text/images etc.</b>');
+        //method click
+        $('#gridDetails').on('click', 'button', function () {
+            var data = table.row($(this).parents('tr')).data();
+            //alert(data[0] + "'s salary is: " + data[5]);
+        });
+    })
+</script>

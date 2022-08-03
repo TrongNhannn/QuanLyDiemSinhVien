@@ -1,0 +1,43 @@
+﻿@model QuanLyDiemSinhVien.Models.Khoa
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Khoa</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MaKhoa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaKhoa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TenKhoa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenKhoa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KiHieu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KiHieu)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.KhoaID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

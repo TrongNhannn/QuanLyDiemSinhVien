@@ -1,0 +1,70 @@
+﻿<section class="sidebar">
+    <!-- Sidebar user panel -->
+    <div class="user-panel">
+        <div class="pull-left image">
+            <img src="~/Content/images/logoadmin.png" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+            @if (Session["UserName"] != null)
+            {
+                <p>@Session["UserName"]</p>
+            }
+            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+    </div>
+    <!-- search form -->
+    <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search...">
+            <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
+    </form>
+    <!-- /.search form -->
+    <!-- sidebar menu: : style can be found in sidebar.less -->
+    <ul class="sidebar-menu" data-widget="tree">
+        <li class="header"><h3>Chức năng</h3></li>
+        <li class="active treeview">
+            <a href="#">
+                <i class="fa fa-dashboard"></i> <span>Danh mục quản lý</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                    <small class="label pull-right bg-green">3</small>
+
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li class="active"><a href="/Khoas"><i class="fa fa-circle-o"></i>Khoa</a></li>
+                <li class="active"><a href="/NganhDaoTaos"><i class="fa fa-circle-o"></i>Ngành đào tạo</a></li>
+                <li class="active"><a href="/MonHocs"><i class="fa fa-circle-o"></i>Môn học</a></li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="/GiangViens">
+                <i class="fa fa-th"></i> <span>Quản lý giảng viên</span>
+            </a>
+        </li>
+        <li>
+            <a href="/SinhViens">
+                <i class="fa fa-user-circle-o"></i> <span>Quản lý sinh viên</span>
+            </a>
+        </li>
+        <li>
+            <a href="/LopTinChis">
+                <i class="fa fa-laptop"></i> <span>Quản lý lớp</span>
+            </a>
+        </li>
+        <li>
+            <a href="/BangDiems">
+                <i class="fa fa-table"></i> <span>Quản lý bảng điểm</span>
+            </a>
+        </li>
+        
+
+
+    </ul>
+</section>

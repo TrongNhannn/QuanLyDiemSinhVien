@@ -1,0 +1,23 @@
+﻿.table > thead > tr {
+    background-color: #167F92;
+    color: #FFF;
+}
+.table > tbody > tr > td > a{
+    margin-right:1px;
+}
+
+hr {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    border: 0;
+    border-top: 1px solid #c7c6c6;
+}
+.pagination>.active>a{
+    background-color: #167F92;
+    border-color:#167F92;
+    color: #FFF;
+}
+.diem-edit{
+    width: 100%;
+    height: 20px;
+}

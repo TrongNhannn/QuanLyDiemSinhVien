@@ -1,0 +1,236 @@
+﻿@model IEnumerable<QuanLyDiemSinhVien.ViewModels.DanhSachLopViewModels>
+@using QuanLyDiemSinhVien.ViewModels;
+@{
+    ViewBag.Title = "Bảng điểm lớp tín chỉ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/jquery")
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Quản lý bảng điểm
+        <small>Danh sách chi tiết</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li class="active">Quản lý bảng điểm</li>
+    </ol>
+</section>
+<hr />
+<section class="content">
+    <table id="gridBangDiemSinhVienDetails" class="table table-bordered table-striped hover">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>
+                    Mã SV
+                </th>
+                <th>
+                    Họ và tên
+                </th>
+                <th>
+                    Ngày sinh
+                </th>
+                <th>
+                    Điểm TP
+                </th>
+                <th>
+                    Điểm Thi
+                </th>
+                <th>
+                    Điểm TB
+                </th>
+                <th>
+                    Điểm Chữ
+                </th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int i = 1; }
+            @foreach (DanhSachLopViewModels item in Model)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@Html.DisplayFor(modelItem => item.MaSinhVien)</td>
+                    <td>@Html.DisplayFor(modelItem => item.HoTen)</td>
+                    <td>@Html.DisplayFor(modelItem => item.NgaySinh)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DiemThanhPhan)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DiemThi)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DiemTrungBinh)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DiemChu)</td>
+                    <td>@item.BangDiemID</td>
+                </tr>
+                i++;
+            }
+
+        </tbody>
+    </table>
+</section>
+
+
+<script>
+    $(function () {
+
+        var table = $("#gridBangDiemSinhVienDetails").DataTable({
+            'paging': true,
+            'lengthChange': true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false,
+            'language': dataTable.language,
+            'columnDefs': [
+                {
+                    "targets": [0], "width": 40, "class": "text-center", "orderable": false
+                }, {
+                    "targets": [1], "width": 90, "class": "text-left"
+                }, {
+                    "targets": 3, "width": 70, "class": "text-center"
+                    //,"render": function (data, type, row) {
+                    //    var x = parseInt(data.substr(6));
+                    //    var html = convertDate(x);
+                    //    return html;
+                    //}
+                }, {
+                    "targets": [4], "width": 80, "class": "text-center", "orderable": false,
+                    "render": function (data, type, row) {
+                        var html = '';
+                        html += '<input onkeypress="return isNumber(event)" id="index_DTP_' + row[8] + '" value="' + data + '" class="diem-edit text-center"/>';
+                        return html;
+                    }
+                }, {
+                    "targets": [5], "width": 80, "class": "text-center", "orderable": false,
+                    "render": function (data, type, row) {
+                        var html = '';
+                        html += '<input onkeypress="return isNumber(event)" id="index_DT_' + row[8] + '" value="' + data + '" class="diem-edit text-center"/>';
+                        return html;
+                    }
+                }, {
+                    "targets": [6], "width": 80, "class": "text-center", "orderable": false,
+                    "render": function (data, type, row) {
+                        var html = '';
+                        html += '<input readonly id="index_DTB_' + row[8] + '" value="' + data + '" class="diem-edit text-center"/>';
+                        return html;
+                    }
+                }
+                , {
+                    "targets": [7], "width": 80, "class": "text-center", "orderable": false,
+                    "render": function (data, type, row) {
+                        var kq = ""
+                        var diem = parseFloat(String(row[6]));
+                        if (diem < 4)
+                            kq = "F";
+                        else if (diem >= 4 && diem < 5)
+                            kq = "D";
+                        else if (diem >= 5 && diem < 5.5)
+                            kq = "D+";
+                        else if (diem >= 5.5 && diem < 6.5)
+                            kq = "C";
+                        else if (diem >= 6.5 && diem < 7)
+                            kq = "C+";
+                        else if (diem >= 7 && diem < 8)
+                            kq = "B";
+                        else if (diem >= 8 && diem < 8.5)
+                            kq = "B+";
+                        else
+                            kq = "A";
+                        var html = '';
+                        html += '<input readonly id="index_DC_' + row.BangDiemID + '" value="' + kq + '" class="diem-edit text-center"/>';
+                        return html;
+                    }
+                }
+                , {
+                    "targets": [8], "class": "text-center", "orderable": false, "width": 60,
+                    "render": function (data, type, row) {
+                        var html = '';
+                        html += '<a type="button" data-content="' + data + '" class="btn bg-olive btn-xs"><i class="fa fa-fw fa-save"></i></a>';
+                        return html;
+                    }
+                }
+            ]
+        })
+
+        $('#gridBangDiemSinhVienDetails tbody').on('click', 'a', function () {
+            var _row = this;
+            var dataRow = table.row($(_row).parents('tr')).data();
+            console.log(dataRow);
+            var rs = confirm("Xác nhận cập nhật điểm sinh viên!");
+            if (rs)
+                loadData({
+                    url: "/BangDiems/CapNhatBangDiemLopHocSinhVien"
+                    , data: {
+                        bangdiemID: parseInt(dataRow[8])
+                        , diemTP: parseFloat($("#index_DTP_" + dataRow[8]).val())
+                        , diemThi: parseFloat($("#index_DT_" + dataRow[8]).val())
+                    }, success: function (data, status) {
+                        alert(data.message);
+                        var dtb = (parseFloat($("#index_DTP_" + dataRow[8]).val()) * 0.3) + (parseFloat($("#index_DT_" + dataRow[8]).val()) * 0.7);
+                        var kq = ""
+                        var dtb = dtb.toFixed(2);
+                        var diem = parseFloat(dtb);
+                        if (diem < 4)
+                            kq = "F";
+                        else if (diem >= 4 && diem < 5)
+                            kq = "D";
+                        else if (diem >= 5 && diem < 5.5)
+                            kq = "D+";
+                        else if (diem >= 5.5 && diem < 6.5)
+                            kq = "C";
+                        else if (diem >= 6.5 && diem < 7)
+                            kq = "C+";
+                        else if (diem >= 7 && diem < 8)
+                            kq = "B";
+                        else if (diem >= 8 && diem < 8.5)
+                            kq = "B+";
+                        else
+                            kq = "A";
+                        $("#index_DTB_" + dataRow[8]).val(dtb);
+                        $("#index_DC_" + dataRow[8]).val(kq);
+                    }, error: function (error) {
+                        console.log(error);
+                        alert(error);
+                    }
+                });
+        });
+    })
+    function loadData(allData) {
+        var url = allData.url;
+        var method = allData.method;
+        var data = allData.data;
+        $.ajax({
+            type: method || "POST",
+            url: url,
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: allData.success,
+            error: allData.error
+        });
+    }
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        console.log(charCode)
+        if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 46) {
+            return false;
+        }
+        return true;
+    }
+    function convertDate(dateObject) {
+        var d = new Date(dateObject);
+        var day = d.getDate();
+        var month = d.getMonth() + 1;
+        var year = d.getFullYear();
+        if (day < 10) {
+            day = "0" + day;
+        }
+        if (month < 10) {
+            month = "0" + month;
+        }
+        var date = day + "-" + month + "-" + year;
+
+        return date;
+    };
+</script>

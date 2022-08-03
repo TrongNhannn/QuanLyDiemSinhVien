@@ -1,0 +1,156 @@
+﻿@model QuanLyDiemSinhVien.Models.LopTinChi
+
+@{
+    ViewBag.Title = "Xóa lớp tín chỉ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Xóa sinh viên
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="/SinhViens">Quản lý sinh viên</a></li>
+        <li class="active">Xóa sinh viên</li>
+    </ol>
+</section>
+<hr />
+
+<section class="content">
+    <div class="text-center">
+        <h3>Bạn chắc chắn muốn lớp tín chỉ này?</h3>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Xóa" class="btn bg-maroon" />
+                @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn bg-purple margin" })
+            </div>
+        }
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <!-- The time line -->
+            <ul class="timeline">
+                <!-- timeline item -->
+                <li>
+                    <!-- timeline icon -->
+                    <i class="fa fa-info-circle bg-blue"></i>
+                    <div class="timeline-item">
+                        @*<span class="time"><i class="fa fa-clock-o"></i> 12:05</span>*@
+                        <h3 class="timeline-header"><a href="#">Thông tin lớp tín chỉ</a></h3>
+
+                        <div class="timeline-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MaLopTinChi, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @Html.DisplayFor(model => model.MaLopTinChi, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.TenLopTinChi, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @Html.DisplayFor(model => model.TenLopTinChi, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.SoLuongToiDa, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @Html.DisplayFor(model => model.SoLuongToiDa, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-horizontal">
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.NgayBatDau, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @Html.DisplayFor(model => model.NgayBatDau, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.NgayKetThuc, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @Html.DisplayFor(model => model.NgayKetThuc, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.KichHoat, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @if (Model.KichHoat == true)
+                                                {
+                                                    <span class="label label-success">Đang mở</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="label label-danger">Đang đóng</span>
+                                                }
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End timeline body-->
+                    </div>
+                </li>
+                <!-- END timeline item -->
+                <li>
+                    <!-- timeline icon -->
+                    <i class="fa fa-briefcase bg-blue"></i>
+                    <div class="timeline-item">
+                        @*<span class="time"><i class="fa fa-clock-o"></i> 12:05</span>*@
+                        <h3 class="timeline-header"><a href="#">Thông tin khoa - ngành đào tạo - môn học</a></h3>
+                        <div class="timeline-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.NganhDaoTao.KhoaID, "Khoa", htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("KhoaID", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.GiangVienID, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("GiangVienID", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.NganhDaoTaoID, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("NganhDaoTaoID", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MonHocID, "Môn học", htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("MonHocID", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- /.col -->
+    </div>
+</section>

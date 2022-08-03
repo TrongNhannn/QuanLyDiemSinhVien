@@ -1,0 +1,228 @@
+﻿@model QuanLyDiemSinhVien.Models.LopTinChi
+
+@{
+    ViewBag.Title = "Cập nhật thông tin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Scripts.Render("~/bundles/jquery")
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Cập nhật thông tin
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="/LopTinChis">Quản lý lớp tín chỉ</a></li>
+        <li class="active">Cập nhật thông tin</li>
+    </ol>
+</section>
+<hr />
+<section class="content">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-lg-6"><h4>Nhập thông tin lớp</h4></div>
+            <div class="col-lg-6">
+                @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn bg-purple pull-right" })
+                <input type="submit" value="Cập nhật" class="btn bg-maroon pull-right" style="margin-right:5px;" />
+            </div>
+        </div>
+        <hr />
+        @Html.HiddenFor(model => model.LopTinChiID)
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MaLopTinChi, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.MaLopTinChi, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.MaLopTinChi, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TenLopTinChi, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.TenLopTinChi, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TenLopTinChi, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SoLuongToiDa, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.SoLuongToiDa, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.SoLuongToiDa, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NgayBatDau, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.NgayBatDau, new { htmlAttributes = new { @Value = @Model.NgayBatDau.Value.ToString("yyyy-MM-dd"), @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.NgayBatDau, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NgayKetThuc, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.NgayKetThuc, new { htmlAttributes = new { @Value = @Model.NgayKetThuc.Value.ToString("yyyy-MM-dd"), @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.NgayKetThuc, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NganhDaoTaoID, "Khoa", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.DropDownList("KhoaID", null, htmlAttributes: new { @class = "form-control", @onchange = "khoaChange()" })
+                            @Html.ValidationMessageFor(model => model.NganhDaoTaoID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.GiangVienID, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.HiddenFor(model => model.GiangVienID, new { id = "hGiangVienID" })
+                            @Html.DropDownList("GiangVienID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.GiangVienID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NganhDaoTaoID, "Ngành đào tạo", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.HiddenFor(model => model.NganhDaoTaoID,new { id = "hNganhDaoTaoID" })
+                            @Html.DropDownList("NganhDaoTaoID", null, htmlAttributes: new { @class = "form-control", @onchange = "nganhDaoTaoChange()" })
+                            @Html.ValidationMessageFor(model => model.NganhDaoTaoID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MonHocID, "Môn học", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.HiddenFor(model => model.MonHocID,new { id="hMonHocID" })
+                            @Html.DropDownList("MonHocID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MonHocID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.KichHoat, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.DropDownList("KichHoat", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.KichHoat, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    }
+</section>
+
+<script>
+    $(function () {
+        GiangViens = $('#GiangVienID');
+        NganhDaoTaos = $('#NganhDaoTaoID');
+        MonHocs = $('#MonHocID');
+
+        GiangViens.empty();
+        NganhDaoTaos.empty();
+        MonHocs.empty();
+        
+        DataGiangVienID = $('#hGiangVienID').val();
+        DataNganhDaoTaoID = $('#hNganhDaoTaoID').val();
+        DataMonHocID = $('#hMonHocID').val();
+        //load du lieu Khoa
+        khoaChange();
+    })
+    function khoaChange() {
+        var SelValue;
+        var dropdown = document.getElementById('KhoaID');
+        if (dropdown != null) {
+            var myindex = dropdown.selectedIndex;
+            if (myindex != -1) {
+                SelValue = dropdown.options[myindex].value;
+            }
+        }
+
+        //LoadGiangVien
+        loadData({
+            url: "/GiangViens/GetListGiangVienTheoKhoa"
+            , data: { khoaID: SelValue }
+            , success: function (data, status) {
+                GiangViens.empty();
+                $.each(data, function (index, object) {
+                    var selected = object.GiangVienID == DataGiangVienID ? "selected" : "";
+                    var html = '<option ' + selected + ' value="' + object.GiangVienID + '">' + object.HoTen + '</option>';
+                    GiangViens.append(html);
+                });
+            }
+        });
+        //LoadNganhDaoTao
+        loadData({
+            url: "/NganhDaoTaos/GetListNganhDaoTaoTheoKhoa"
+            , data: { khoaID: SelValue }
+            , success: function (data, status) {
+                NganhDaoTaos.empty();
+                $.each(data, function (index, object) {
+                    var selected = object.NganhDaoTaoID == DataNganhDaoTaoID ? "selected" : "";
+                    var html = '<option ' + selected + ' value="' + object.NganhDaoTaoID + '">' + object.TenNganh + '</option>';
+                    NganhDaoTaos.append(html);
+                });
+
+                //load du lieu mon hoc
+                setTimeout(nganhDaoTaoChange(), 1500);
+            }
+        });
+        return false;
+    }
+
+    function nganhDaoTaoChange() {
+        var SelValue;
+        var dropdown = document.getElementById('NganhDaoTaoID');
+        if (dropdown != null) {
+            var myindex = dropdown.selectedIndex;
+            if (myindex != -1) {
+                SelValue = dropdown.options[myindex].value;
+            }
+        }
+        //LoadMonHoc
+        loadData({
+            url: "/MonHocs/GetListMonHocTheoNganh"
+            , data: { nganhDaoTaoID: SelValue }
+            , success: function (data, status) {
+                MonHocs.empty();
+                $.each(data, function (index, object) {
+                    var selected = object.MonHocID == DataMonHocID ? "selected" : "";
+                    var html = '<option ' + selected + ' value="' + object.MonHocID + '">' + object.TenMonHoc + '</option>';
+                    MonHocs.append(html);
+                });
+            }
+        });
+        return false;
+    }
+
+    function loadData(allData) {
+        var url = allData.url;
+        var method = allData.method;
+        var data = allData.data;
+        $.ajax({
+            type: method || "POST",
+            url: url,
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: allData.success,
+            error: allData.error
+        });
+    }
+</script>

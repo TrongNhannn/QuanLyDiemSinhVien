@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="QuanLyDiemSinhVien.Models.ApplicationDbContext" Collapsed="true">
+    <Position X="1.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACABAAAAAAAAAAAAAAAAAAEAAAAEAAACAAAAAAAAA=</HashCode>
+      <FileName>Models\ApplicationDbContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuanLyDiemSinhVien.Models.ApplicationGroup" Collapsed="true">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAABAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ApplicationGroup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuanLyDiemSinhVien.Models.ApplicationRole" Collapsed="true">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ApplicationRole.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuanLyDiemSinhVien.Models.ApplicationRoleGroup" Collapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEIEAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ApplicationRoleGroup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuanLyDiemSinhVien.Models.ApplicationUser" Collapsed="true">
+    <Position X="12" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAoCAAAAAQgAAAAAAAAAAQEAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Models\ApplicationUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuanLyDiemSinhVien.Models.ApplicationUserClaim" Collapsed="true">
+    <Position X="6.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ApplicationUserClaim.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuanLyDiemSinhVien.Models.ApplicationUserGroup" Collapsed="true">
+    <Position X="8.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAEAEAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ApplicationUserGroup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuanLyDiemSinhVien.Models.BangDiem" Collapsed="true">
+    <Position X="10.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAQgAAAAABACAEAAAAAAAAgAQAAAAAA=</HashCode>
+      <FileName>Models\BangDiem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuanLyDiemSinhVien.Models.GiangVien" Collapsed="true">
+    <Position X="12" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAQACAAAAAQAAABAAAEAAAEAAEAEAAAAAAAICI=</HashCode>
+      <FileName>Models\GiangVien.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuanLyDiemSinhVien.Models.Khoa" Collapsed="true">
+    <Position X="6.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAgEAAAgAAIAAAAAACAgAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Models\Khoa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuanLyDiemSinhVien.Models.KhoaHoc" Collapsed="true">
+    <Position X="8.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Models\KhoaHoc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuanLyDiemSinhVien.Models.Lop_SinhVien" Collapsed="true">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAgAAAAgAAAAAAAAAAAACAAAEAAAAA=</HashCode>
+      <FileName>Models\Lop_SinhVien.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuanLyDiemSinhVien.Models.LopHoc" Collapsed="true">
+    <Position X="10.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAIAAAAAAAAAEEAAEAACAAAAAAACE=</HashCode>
+      <FileName>Models\LopHoc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuanLyDiemSinhVien.Models.LopTinChi" Collapsed="true">
+    <Position X="12" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAgASAAIAAACIAAIBAQEAEAAAAAAABAAAAAAg=</HashCode>
+      <FileName>Models\LopTinChi.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuanLyDiemSinhVien.Models.LopTinChi_SinhVien" Collapsed="true">
+    <Position X="6.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgIAgAAAAgAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Models\LopTinChi_SinhVien.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuanLyDiemSinhVien.Models.MonHoc" Collapsed="true">
+    <Position X="8.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAgAARBBAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Models\MonHoc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuanLyDiemSinhVien.Models.NganhDaoTao" Collapsed="true">
+    <Position X="4.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAECAAABAAAAAAAAEAAAAAAAAABCA=</HashCode>
+      <FileName>Models\NganhDaoTao.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuanLyDiemSinhVien.Models.NganhDaoTao_MonHoc" Collapsed="true">
+    <Position X="10.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAgAAAACAAAIBAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\NganhDaoTao_MonHoc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuanLyDiemSinhVien.Models.QuanLyDiemSinhVienConnection" Collapsed="true">
+    <Position X="1.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAiEAgAoAQAEBAIQACAgBAAEAAAgAAAAAAAAAAABAA=</HashCode>
+      <FileName>Models\QuanLyDiemSinhVienContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuanLyDiemSinhVien.Models.SinhVien" Collapsed="true">
+    <Position X="12" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAICAAEAAwACAAAUAEAABAAAEgAAAAAAABICI=</HashCode>
+      <FileName>Models\SinhVien.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

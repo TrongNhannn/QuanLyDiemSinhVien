@@ -1,0 +1,91 @@
+﻿@model IEnumerable<QuanLyDiemSinhVien.Models.Khoa>
+
+@{
+    ViewBag.Title = "QL Khoa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Scripts.Render("~/bundles/jquery")
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Danh mục Khoa
+        <small>Danh sách chi tiết</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li class="active">QL Khoa</li>
+    </ol>
+</section>
+<hr />
+
+                      <a href="/Khoas/Create" class="btn btn-primary margin"><i class="fa fa-fw fa-plus"></i> Thêm mới</a>
+
+<section class="content">
+
+    <table id="gridDetails" class="table table-bordered table-striped hover">
+        <thead>
+            <tr>
+                <td>STT</td>
+                <td>Mã Khoa</td>
+                <td>Tên Khoa</td>
+               
+                <td>Kí Hiệu</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        
+        <tbody>
+            @{ int i = 1; }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaKhoa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenKhoa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.KiHieu)
+                    </td>
+                    <td>
+                        @item.KhoaID
+                    </td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+
+</section>
+
+<script>
+    $(function () {
+        $("#gridDetails").DataTable({
+            'paging': true,
+            'lengthChange': true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false,
+            'language': dataTable.language,
+            'columnDefs': [
+                {
+                    "targets": [0], "width": 40, "class": "text-center", "orderable": false
+                }, {
+                    "targets": [3], "width": 100, "class": "text-center"
+                }
+                , {
+                    "targets": [4], "class": "text-center", "orderable": false, "width": 100,
+                    "render": function (data, type, row) {
+                        var html = '';
+                        html += '<a type="button" href="/Khoas/Edit/' + data + '" title="Sửa" class="btn btn-success btn-xs"><i class="fa fa-fw fa-pencil"></i></a>';
+                        html += '<a type="button" href="/Khoas/Delete/' + data + '" title="Xóa" class="btn btn-danger btn-xs"><i class="fa fa-fw fa-trash"></i></a>';
+                        return html;
+                    }
+                }
+            ]
+        })
+    })
+</script>

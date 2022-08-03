@@ -1,0 +1,128 @@
+﻿@model IEnumerable<QuanLyDiemSinhVien.Models.SinhVien>
+
+@{
+    ViewBag.Title = "Quản lý Sinh Viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Scripts.Render("~/bundles/jquery")
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Quản lý sinh viên
+        <small>Danh sách chi tiết</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li class="active">Quản lý sinh viên</li>
+    </ol>
+</section>
+<hr />
+                      <a href="/SinhViens/Create" class="btn btn-primary margin"><i class="fa fa-fw fa-plus"></i> Thêm mới</a>
+
+<section class="content">
+    <table id="gridDetails" class="table table-bordered table-striped hover">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>
+                   Mã SV
+                </th>
+                <th>
+                    Họ và tên
+                </th>
+                <th>
+                   Ngày sinh
+                </th>
+                <th>
+                   Giới tính
+                </th>
+                <th>
+                    Số ĐT
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Ghi chú
+                </th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int i = 1;}
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaSinhVien)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HoTen)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NgaySinh)
+                    </td>
+                    <td>
+                        @item.GioiTinh.Value.ToString()
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoDTDiDong)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GhiChu)
+                    </td>
+                    <td>
+                       @item.SinhVienID 
+                    </td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+</section>
+<script>
+    $(function () {
+        $("#gridDetails").DataTable({
+            'paging': true,
+            'lengthChange': true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false,
+            'language': dataTable.language,
+            'columnDefs': [
+                {
+                    "targets": [0], "width": 40, "class": "text-center", "orderable": false
+                }, {
+                    "targets": 3, "width": 70, "class": "text-center"
+                }, {
+                    "targets": [4], "class": "text-center", "sType": "boolean", "width": 60, "render": function (data, type, row) {
+                        var html = "Nữ";
+                        if (data == "True")
+                            html = "Nam";
+                        return html;
+                    },
+                }
+                , {
+                    "targets": [8], "class": "text-center", "orderable": false, "width": 60,
+                    "render": function (data, type, row) {
+                        var html = '';
+                        html += '<a type="button" href="/SinhViens/Edit/' + data + '" class="btn bg-olive btn-xs"><i class="fa fa-fw fa-pencil"></i></a>';
+                        html += '<a type="button" href="/SinhViens/Delete/' + data + '" class="btn bg-maroon btn-xs"><i class="fa fa-fw fa-trash"></i></a>';
+                        return html;
+                    }
+                }
+            ]
+        })
+        $("div.toolbar").html('<b>Custom tool bar! Text/images etc.</b>');
+        //method click
+        $('#gridDetails').on('click', 'button', function () {
+            var data = table.row($(this).parents('tr')).data();
+            //alert(data[0] + "'s salary is: " + data[5]);
+        });
+    })
+</script>

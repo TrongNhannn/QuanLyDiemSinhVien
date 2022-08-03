@@ -1,0 +1,92 @@
+﻿@model IEnumerable<QuanLyDiemSinhVien.Models.NganhDaoTao>
+
+@{
+    ViewBag.Title = "QL Ngành đào tạo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/jquery")
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Danh mục Ngành đào tạo
+        <small>Danh sách chi tiết</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li class="active">QL Ngành đào tạo</li>
+    </ol>
+</section>
+<hr />
+
+                      <a href="/NganhDaoTaos/Create" class="btn btn-primary margin"><i class="fa fa-fw fa-plus"></i> Thêm mới</a>
+
+<section class="content">
+
+    <table id="gridDetails" class="table table-bordered table-striped hover">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <td>
+                    @Html.DisplayNameFor(model => model.Khoa.TenKhoa)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.TenNganh)
+                </td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int i = 1; }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Khoa.TenKhoa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenNganh)
+                    </td>
+                    <td>
+                        @item.NganhDaoTaoID
+                    </td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+
+</section>
+
+
+<script>
+    $(function () {
+        $("#gridDetails").DataTable({
+            'paging': true,
+            'lengthChange': true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false,
+            'language': dataTable.language,
+            'columnDefs': [
+                {
+                    "targets": [0], "width": 40, "class": "text-center", "orderable": false
+                }, {
+                    "targets": [1], "width": 200, "class": "text-left"
+                }
+                , {
+                    "targets": [3], "class": "text-center", "orderable": false, "width": 100,
+                    "render": function (data, type, row) {
+                        var html = '';
+                        html += '<a type="button" href="/NganhDaoTaos/Details/' + data + '" title="Xem chi tiết" class="btn btn-warning btn-xs"><i class="fa fa-fw fa-eye"></i></a>';
+                        html += '<a type="button" href="/NganhDaoTaos/Edit/' + data + '" title="Sửa" class="btn btn-success btn-xs"><i class="fa fa-fw fa-pencil"></i></a>';
+                        html += '<a type="button" href="/NganhDaoTaos/Delete/' + data + '" title="Xóa" class="btn btn-danger btn-xs"><i class="fa fa-fw fa-trash"></i></a>';
+                        return html;
+                    }
+                }
+            ]
+        })
+    })
+</script>

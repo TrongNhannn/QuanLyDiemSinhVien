@@ -1,0 +1,128 @@
+﻿@model IEnumerable<QuanLyDiemSinhVien.ViewModels.BangDiemMonHocViewModels>
+@using QuanLyDiemSinhVien.ViewModels;
+@{
+    ViewBag.Title = "Bảng điểm sinh viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Scripts.Render("~/bundles/jquery")
+<section class="content-header">
+    <h1>
+        Xem điểm
+        <small>Bảng điểm môn học</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li class="active">Xem điểm</li>
+    </ol>
+</section>
+<hr />
+<section class="content">
+    <table id="gridBangDiemMonHocDetails" class="table table-bordered table-striped hover">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>
+                    Tên môn học
+                </th>
+                <th>
+                    Số tín chỉ
+                </th>
+                <th>
+                    Điểm TP
+                </th>
+                <th>
+                    Điểm Thi
+                </th>
+                <th>
+                    Điểm TB
+                </th>
+                <th>
+                    Điểm Chữ
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int i = 1; }
+            @foreach (BangDiemMonHocViewModels item in Model)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@Html.DisplayFor(modelItem => item.TenMonHoc)</td>
+                    <td>@Html.DisplayFor(modelItem => item.SoTinChi)</td>
+                    <td>@item.DiemThanhPhan</td>
+                    <td>@item.DiemThi</td>
+                    <td>@item.DiemTrungBinh</td>
+                    <td>@item.DiemChu</td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+    <div class=" row">
+        <div class="col-6">
+            <h4>Số tín chỉ tích lũy:</h4><br />
+            <h4>Điểm trung bình:</h4>
+
+        </div>
+
+        <div class="col-6">
+           
+
+        </div>
+    </div>
+</section>
+
+<script>
+    $(function () {
+        var table = $("#gridBangDiemMonHocDetails").DataTable({
+            'paging': true,
+            'lengthChange': true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false,
+            'language': dataTable.language,
+            'columnDefs': [
+                {
+                    "targets": [0], "width": 40, "class": "text-center", "orderable": false
+                }, {
+                    "targets": [2], "width": 90, "class": "text-left"
+                }, {
+                    "targets": [3,4,5], "width": 80, "class": "text-center", "orderable": false,
+                    "render": function (data, type, row) {
+                        var html = '';
+                        html += '<input readonly value="' + data + '" class="diem-edit text-center"/>';
+                        return html;
+                    }
+                }, {
+                    "targets": [6], "width": 80, "class": "text-center", "orderable": false,
+                    "render": function (data, type, row) {
+                        var kq = ""
+                        var diem = parseFloat(row[5]);
+                        if (diem < 4)
+                            kq = "F";
+                        else if (diem >= 4 && diem < 5)
+                            kq = "D";
+                        else if (diem >= 5 && diem < 5.5)
+                            kq = "D+";
+                        else if (diem >= 5.5 && diem < 6.5)
+                            kq = "C";
+                        else if (diem >= 6.5 && diem < 7)
+                            kq = "C+";
+                        else if (diem >= 7 && diem < 8)
+                            kq = "B";
+                        else if (diem >= 8 && diem < 8.5)
+                            kq = "B+";
+                        else
+                            kq = "A";
+                        var html = '';
+                        html += '<input readonly value="' + kq + '" class="diem-edit text-center"/>';
+                        return html;
+                    }
+                }
+            ]
+        })
+
+
+    })
+</script>
